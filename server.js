@@ -48,9 +48,6 @@ app.post('/findAns',function(req,res)      //Find Answer Request
       {
          console.log(data);
          res.send(data);
-          //  var obj=JSON.parse(data);
-          //  console.log(obj.url);
-          //  res.send(obj.url);
       }
       else{
         res.send("0");
