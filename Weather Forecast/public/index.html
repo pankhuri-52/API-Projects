@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Weather Forecast Reports of the city</title>
+        <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <center>
+        Name of the city: <input type="text" id="city">
+        <br>
+        Here's the information about the city:
+        <div id="info">
+        </div>
+        <br><br>
+        <button type="button" class="btn btn-primary" onclick="getInfo()">Submit</button>
+        </center>
+    </body>
+    <script>
+        function getInfo(){
+            var cityName=document.getElementById("city").value;
+            console.log(cityName);
+
+            var obj={
+                query:cityName
+            }
+            console.log(obj);
+
+            obj=JSON.stringify(obj);
+            console.log(obj);
+            
+            // var data = null;
+            var xhr = new XMLHttpRequest();
+            
+            xhr.open("GET","http://api.weatherapi.com/v1/current.json?key=e2e00c27a0ae457e9ae162727202403&q="+cityName,true);
+           
+            xhr.onload=function (req,res){
+                    console.log(xhr.responseText);
+            }
+           xhr.send();
+        }
+    </script>
+</html>
