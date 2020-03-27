@@ -1,5 +1,29 @@
 <html>
     <head>
+        <style>
+           body, html {
+                height: 100%;
+                margin: 0;
+                }
+
+                .bg {
+                background-image: url("clouds.jpg");
+
+                /* Full height */
+                height: 100%; 
+
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                }
+                #info{
+                    color:white;
+                }
+                #curr{
+                    color:white;
+                }
+            </style>
         <title>Weather Forecast Reports of the city</title>
         <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,28 +32,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <center>
-        Name of the city: <input type="text" id="city">
-        <br>
-        Here's the information about the city:
-        <div id="info">
-        </div>
+        <div class="bg">
+            <center><h1 style="color:white;text-shadow:2px 2px black;">WEATHER FORECAST</h1></center>
+            <center>
+       <p style="color:white;"> Name of the city: </p><input type="text" id="city"><br>
+        <center><h2 style="color:white;text-shadow:2px 2px black;">Location Information</h2></center><br>
+        <center><table id="info"></table></center>
+        <br><br>
+        <center><h2 style="color:white;text-shadow:2px 2px black;">Current Conditions</h2></center><br>
+        <center><table id="curr"></table></center>
         <br><br>
         <button type="button" class="btn btn-primary" onclick="getInfo()">Submit</button>
         </center>
+        </div>
     </body>
     <script>
         function getInfo(){
             var cityName=document.getElementById("city").value;
-            console.log(cityName);
 
             var obj={
                 query:cityName
             }
-            console.log(obj);
+           // console.log(obj);
 
             obj=JSON.stringify(obj);
-            console.log(obj);
+            //console.log(obj);
             
             // var data = null;
             var xhr = new XMLHttpRequest();
@@ -37,7 +64,59 @@
             xhr.open("GET","http://api.weatherapi.com/v1/current.json?key=e2e00c27a0ae457e9ae162727202403&q="+cityName,true);
            
             xhr.onload=function (req,res){
-                    console.log(xhr.responseText);
+                    //console.log(xhr.responseText);
+
+                    var response=JSON.parse(xhr.responseText);
+                    console.log(response);
+                    console.log(response.current.humidity);
+                    var mains=document.getElementById("info");
+                    var main_list=document.createElement("ul");
+                    var ul1=document.createElement("li");
+                    ul1.innerHTML="Name of city : "+response.location.name;
+                    main_list.appendChild(ul1);
+
+                    var ul2=document.createElement("li");
+                    ul2.innerHTML="Region : "+response.location.region;
+                    main_list.appendChild(ul2);
+
+                    var ul3=document.createElement("li");
+                    ul3.innerHTML="Country : "+response.location.country;
+                    main_list.appendChild(ul3);
+
+                    var ul4=document.createElement("li");
+                    ul4.innerHTML="Latitude : "+response.location.lat+" Longitude : "+response.location.lon;
+                    main_list.appendChild(ul4);
+
+                    var ul5=document.createElement("li");
+                    ul5.innerHTML="Current Date and Time : "+response.location.localtime;
+                    main_list.appendChild(ul5);
+                    mains.appendChild(main_list);
+
+
+
+                    var cur=document.getElementById("curr");
+                    var main_list1=document.createElement("ul");
+                    var ul6=document.createElement("li");
+                    ul6.innerHTML="Temperature in Celsius : "+response.current.temp_c;
+                    main_list1.appendChild(ul6);
+
+                    var ul7=document.createElement("li");
+                    ul7.innerHTML="Temperature in Fahrenheit : "+response.current.temp_f;
+                    main_list1.appendChild(ul7);
+
+                    var ul8=document.createElement("li");
+                    ul8.innerHTML="Humidity : "+response.current.humidity;
+                    main_list1.appendChild(ul8);
+
+                    var ul9=document.createElement("li");
+                    ul9.innerHTML="Precipitation in mm : "+response.current.precip_mm;
+                    main_list1.appendChild(ul9);
+
+                    var ul10=document.createElement("li");
+                    ul10.innerHTML="Wind in mph : "+response.current.wind_mph;
+                    main_list1.appendChild(ul10);
+                    cur.appendChild(main_list1);
+
             }
            xhr.send();
         }
