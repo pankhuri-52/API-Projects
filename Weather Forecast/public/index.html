@@ -53,18 +53,13 @@
             var obj={
                 query:cityName
             }
-           // console.log(obj);
 
             obj=JSON.stringify(obj);
-            //console.log(obj);
-            
-            // var data = null;
             var xhr = new XMLHttpRequest();
             
             xhr.open("GET","http://api.weatherapi.com/v1/current.json?key=e2e00c27a0ae457e9ae162727202403&q="+cityName,true);
            
             xhr.onload=function (req,res){
-                    //console.log(xhr.responseText);
 
                     var response=JSON.parse(xhr.responseText);
                     console.log(response);
