@@ -1,35 +1,12 @@
 <html>
     <head>
-        <style>
-            .mystyle {
-              width: 25%;
-              height : 45%;
-              display: block;
-              margin-left: auto;
-              margin-right: auto;
-              border-radius: 10px;
-            }
-            table,th,td{
-                border: 1px solid black;
-                border-radius: 5px;
-            }
-            .top {
-                padding: 20px;
-                text-align: center;
-                font-family: Arial, Helvetica, sans-serif;
-                font-weight : bold;
-            }
-            .data{
-                padding: 5px;
-                text-align: center;
-            }
-        </style>
         <title>SuperHeroes Information</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+            <link rel="stylesheet" href="style.css">
         </head>
     </head>
     <body>
@@ -41,133 +18,16 @@
         <button type="submit" class="btn btn-primary mb-2" onclick="getName()">Submit</button>
         </center>
             <br><br>
-            <div id="simg"></div>
-            <br>
             <center>
-        <table id="tid" border="1" cellpadding="10"></table>
-        </center>
+            <div id="main">
+                <div id="simg"></div>
+                <br>
+                <center>
+                <table id="tid" border="1" cellpadding="10"></table>
+                </center>
+            </div>
+            </center>
         </div>
     </body>
-    <script>
-        function getName() {
-            var SName=document.getElementById("usr").value;
-            
-            var xhr=new XMLHttpRequest();
-            xhr.open("GET","https://www.superheroapi.com/api.php/2947961985298453/search/"+SName,true);
-
-            xhr.onload=function(req,res){   
-                var response=JSON.parse(xhr.responseText);
-                   var Sid = response.results[0].id;
-                    
-                    var xhrr=new XMLHttpRequest();
-                    xhrr.open("GET","https://www.superheroapi.com/api.php/2947961985298453/"+Sid,true);
-
-                    xhrr.onload=function(req,res){
-                        var response=JSON.parse(xhrr.responseText);
-                        console.log(response);
-
-                        //Setting an image
-                        var mains=document.getElementById("simg");
-                        var image_url=document.createElement('img');
-                        image_url.className += "mystyle";
-                        image_url.src=response.image.url;
-                        document.getElementById('simg').appendChild(image_url);
-                        
-                        //first row
-                        var table= document.getElementById("tid");
-                        var heading=document.createElement("tr");
-                        var head1=document.createElement("th");
-                        head1.className += "top";
-                        var head2=document.createElement("th");
-                        head2.className += "top";
-                        var head3=document.createElement("th");
-                        head3.className += "top";
-                        
-                        head1.innerHTML = "POWERSTATS";
-                        head2.innerHTML = "BIOGRAPHY";
-                        head3.innerHTML = "APPEARANCE";
-
-                        heading.appendChild(head1);
-                        heading.appendChild(head2);
-                        heading.appendChild(head3);
-                        table.appendChild(heading);
-
-                        //second row
-                        var row2= document.createElement("tr");
-                        var d1=document.createElement("td");
-                        d1.className += "data";
-                        var d2=document.createElement("td");
-                        d2.className += "data";
-                        var d3=document.createElement("td");
-                        d3.className += "data";
-
-                        d1.innerHTML = "Intelligence : "+response.powerstats.intelligence;
-                        d2.innerHTML = "Full- Name : "+response.biography['full-name'];
-                        d3.innerHTML = "Gender : "+response.appearance.gender;
-
-                        row2.appendChild(d1);
-                        row2.appendChild(d2);
-                        row2.appendChild(d3);
-                        table.appendChild(row2);
-
-                       //third row
-                       var row3=document.createElement("tr");
-                       var da1=document.createElement("td");
-                       da1.className += "data";
-                        var da2=document.createElement("td");
-                        da2.className += "data";
-                        var da3=document.createElement("td");
-                        da3.className += "data";
-
-                        da1.innerHTML = "Strength : "+response.powerstats.strength;
-                        da2.innerHTML = "First Appearance : "+response.biography['first-appearance'];
-                        da3.innerHTML = "Race : "+response.appearance.race;
-
-                        row3.appendChild(da1);
-                        row3.appendChild(da2);
-                        row3.appendChild(da3);
-                        table.appendChild(row3);
-
-                        //fourth row
-                        var row4=document.createElement("tr");
-                       var dat1=document.createElement("td");
-                       dat1.className += "data";
-                        var dat2=document.createElement("td");
-                        dat2.className += "data";
-                        var dat3=document.createElement("td");
-                        dat3.className += "data";
-
-                        dat1.innerHTML = "Speed : "+response.powerstats.speed;
-                        dat2.innerHTML = "Place Of Birth : "+response.biography['place-of-birth'];
-                        dat3.innerHTML = "Eye Colour : "+response.appearance['eye-color'];
-
-                        row4.appendChild(dat1);
-                        row4.appendChild(dat2);
-                        row4.appendChild(dat3);
-                        table.appendChild(row4);
-
-                         //fifth row
-                         var row5=document.createElement("tr");
-                       var data1=document.createElement("td");
-                       data1.className += "data";
-                        var data2=document.createElement("td");
-                        data2.className += "data";
-                        var data3=document.createElement("td");
-                        data3.className += "data";
-
-                        data1.innerHTML = "Power : "+response.powerstats.power;
-                        data2.innerHTML = "Publisher : "+response.biography.publisher;
-                        data3.innerHTML = "Hair Colour : "+response.appearance['hair-color'];
-
-                        row5.appendChild(data1);
-                        row5.appendChild(data2);
-                        row5.appendChild(data3);
-                        table.appendChild(row5);
-
-                    };
-                    xhrr.send();
-            };
-            xhr.send();
-        }
-    </script>
+    <script src="server.js"></script>
 </html>
